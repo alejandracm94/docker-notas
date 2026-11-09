@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16
+    container_name: notas_db
+    env_file: .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - red_notas
+
+  app:
+    build: ./app
+    container_name: notas_app
+    env_file: .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - red_notas
+
+volumes:
+  db_data:
+
+networks:
+  red_notas:
