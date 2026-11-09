@@ -1,0 +1,35 @@
+name: Docker build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Crear .env desde el ejemplo
+        run: cp .env.example .env
+
+      - name: Construir la imagen de la app
+        run: docker build -t notas-app ./app
+
+      - name: Construir con docker compose
+        run: docker compose build
+
+      - name: Levantar los servicios
+        run: docker compose up -d
+
+      - name: Probar la API
+        run: |
+          sleep 15
+          curl --fail http://localhost:5000/
+          docker compose ps
+
+      - name: Apagar los servicios
+        if: always()
+        run: docker compose down -v
