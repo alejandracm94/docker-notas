@@ -14,7 +14,7 @@ def fallar(mensaje):
 
 # 1. El contenedor de la app debe resolver el nombre del servicio "db"
 try:
-    ip = socket.gethostbyname("db")
+    ip = socket.gethostbyname("dbx")
     print("OK: el nombre 'db' se resuelve a " + ip)
 except Exception as e:
     fallar("no se pudo resolver el nombre 'db': " + str(e))
