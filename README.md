@@ -18,4 +18,5 @@ Consultar las notas:
 curl http://localhost:5000/notas
 
 ## Tecnologías
-Docker, Docker Compose, Flask, PostgreSQL, GitHub Actions
+Docker, Docker Compose, Flask, PostgreSQL, GitHub Actions 
+Pipeline de integracion continua con Jenkins. 
